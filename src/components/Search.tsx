@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import CardsProducts from './CardsProducts';
-        
+
 type CategoryType = {
   id: string;
   name: string;
@@ -19,13 +19,12 @@ function Search() {
   const [productValue, setProductValue] = useState({ search: '' });
   const [stateList, setStateList] = useState<CategoryType[]>([]);
   const [stateListApi, setStateListApi] = useState([]);
-  const [stateListMap, setStateListMap] = useState([INITIAL_STATE];
+  const [stateListMap, setStateListMap] = useState([INITIAL_STATE]);
 
   useEffect(() => {
     async function getAPI() {
       const api = await getCategories();
       setStateList(api);
-      console.log(stateList);
     }
     getAPI();
   }, []);
@@ -39,9 +38,11 @@ function Search() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     try {
       event.preventDefault();
-      const products = await getProductsFromCategoryAndQuery('', productValue.search);
+      const products = await
+      getProductsFromCategoryAndQuery(productValue.search, undefined);
       if (products) { setStateListApi(products.results); }
       setStateListMap(products.results);
+      console.log(stateListMap);
     } catch (err) {
       console.error('Nenhum produto foi encontrado');
     }
