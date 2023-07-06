@@ -6,7 +6,6 @@ type CategoryType = {
   id: string;
   name: string;
 };
- 
 
 function Search() {
   const [productValue, setProductValue] = useState('');
