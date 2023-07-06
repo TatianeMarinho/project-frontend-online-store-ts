@@ -20,6 +20,8 @@ function Search() {
   const [stateList, setStateList] = useState<CategoryType[]>([]);
   const [stateListApi, setStateListApi] = useState([]);
   const [stateListMap, setStateListMap] = useState([INITIAL_STATE]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [categoryProducts, setCategoryProducts] = useState([]);
 
   useEffect(() => {
     async function getAPI() {
@@ -47,7 +49,15 @@ function Search() {
       console.error('Nenhum produto foi encontrado');
     }
   };
-
+  const handleCategoryClick = async (categoryId: string) => {
+    try {
+      const products = await getProductsFromCategoryAndQuery('', categoryId);
+      setCategoryProducts(products.results);
+      setSelectedCategory(categoryId);
+    } catch (error) {
+      console.error('Erro ao buscar os produtos da categoria');
+    }
+  };
   return (
     <div>
       <Link data-testid="shopping-cart-button" to="/shoppingcart">Carrinho</Link>
@@ -67,28 +77,42 @@ function Search() {
       </form>
       <div>
         {stateList.length > 0 && (
-          stateList.map((list) => {
-            return (
-              <button data-testid="category" key={ list.id }>{list.name}</button>
-
-            );
-          })
+          stateList.map((list) => (
+            <button
+              data-testid="category"
+              key={ list.id }
+              onClick={ () => handleCategoryClick(list.id) }
+            >
+              {list.name}
+            </button>
+          ))
         )}
       </div>
-      {stateListApi.length === 0
-        ? (
-          <p data-testid="home-initial-message">
-            Digite algum termo de pesquisa ou escolha uma categoria.
-          </p>
-        )
-        : (stateListMap.map((product) => (
+      {selectedCategory !== '' && categoryProducts.length > 0 && (
+        categoryProducts.map((product) => (
           <CardsProducts
             key={ product.id }
             image={ product.thumbnail }
             name={ product.title }
             value={ product.price }
           />
-        )))}
+        ))
+      )}
+      {selectedCategory === '' && stateListApi.length === 0 && (
+        <p data-testid="home-initial-message">
+          Digite algum termo de pesquisa ou escolha uma categoria.
+        </p>
+      )}
+      {selectedCategory === '' && stateListApi.length > 0 && (
+        stateListMap.map((product) => (
+          <CardsProducts
+            key={ product.id }
+            image={ product.thumbnail }
+            name={ product.title }
+            value={ product.price }
+          />
+        ))
+      )}
     </div>
 
   );
