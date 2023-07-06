@@ -87,7 +87,6 @@ function Search() {
             image={ product.thumbnail }
             name={ product.title }
             value={ product.price }
-            data-testid="product"
           />
         )))}
     </div>

@@ -8,11 +8,11 @@ function CardsProducts(props: PropsCard) {
   const { image, name, value } = props;
 
   return (
-    <div>
-      <img src={ image } alt={ name } data-testid="product" />
+    <div data-testid="product">
+      <img src={ image } alt={ name } />
       <div>
-        <h3 data-testid="product">{ name }</h3>
-        <h4 data-testid="product">
+        <h3>{ name }</h3>
+        <h4>
           R$:
           { value }
         </h4>
