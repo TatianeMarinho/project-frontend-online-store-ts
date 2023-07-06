@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getCategories } from '../services/api';
 
 type CategoryType = {
   id: string;
   name: string;
 };
+ 
 
 function Search() {
   const [productValue, setProductValue] = useState('');
@@ -25,6 +27,7 @@ function Search() {
 
   return (
     <div>
+      <Link data-testid="shopping-cart-button" to="/shoppingcart">Carrinho</Link>
       <form>
         <input
           type="text"
