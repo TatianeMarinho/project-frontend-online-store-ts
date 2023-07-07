@@ -96,12 +96,17 @@ function Search() {
       </div>
       {selectedCategory !== '' && categoryProducts.length > 0 && (
         categoryProducts.map((product) => (
-          <CardsProducts
+          <Link
             key={ product.id }
-            image={ product.thumbnail }
-            name={ product.title }
-            value={ product.price }
-          />
+            to={ `/product/details/${product.id}` }
+            data-testid="product-detail-link"
+          >
+            <CardsProducts
+              image={ product.thumbnail }
+              name={ product.title }
+              value={ product.price }
+            />
+          </Link>
         ))
       )}
       {selectedCategory === '' && stateListApi.length === 0 && (
@@ -111,12 +116,17 @@ function Search() {
       )}
       {selectedCategory === '' && stateListApi.length > 0 && (
         stateListMap.map((product) => (
-          <CardsProducts
+          <Link
             key={ product.id }
-            image={ product.thumbnail }
-            name={ product.title }
-            value={ product.price }
-          />
+            to={ `/product/details/${product.id}` }
+            data-testid="product-detail-link"
+          >
+            <CardsProducts
+              image={ product.thumbnail }
+              name={ product.title }
+              value={ product.price }
+            />
+          </Link>
         ))
       )}
     </div>
