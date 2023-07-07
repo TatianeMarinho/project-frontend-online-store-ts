@@ -8,6 +8,12 @@ type CategoryType = {
   name: string;
 };
 
+type ProductType = {
+  id: string;
+  thumbnail: string;
+  title: string;
+  price: string;
+};
 const INITIAL_STATE = {
   id: '',
   thumbnail: '',
@@ -21,7 +27,7 @@ function Search() {
   const [stateListApi, setStateListApi] = useState([]);
   const [stateListMap, setStateListMap] = useState([INITIAL_STATE]);
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [categoryProducts, setCategoryProducts] = useState([]);
+  const [categoryProducts, setCategoryProducts] = useState<ProductType[]>([]);
 
   useEffect(() => {
     async function getAPI() {
