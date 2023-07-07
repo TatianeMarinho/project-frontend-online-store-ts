@@ -46,6 +46,7 @@ function Search() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     try {
       event.preventDefault();
+      setSelectedCategory('');
       const products = await
       getProductsFromCategoryAndQuery(productValue.search, undefined);
       if (products) { setStateListApi(products.results); }
