@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import CardsProducts from './CardsProducts';
+import { setProductOnCart } from '../services/ShoppingCartStorage';
 
 type CategoryType = {
   id: string;
@@ -97,17 +98,24 @@ function Search() {
       </div>
       {selectedCategory !== '' && categoryProducts.length > 0 && (
         categoryProducts.map((product) => (
-          <Link
-            key={ product.id }
-            to={ `/product/details/${product.id}` }
-            data-testid="product-detail-link"
-          >
-            <CardsProducts
-              image={ product.thumbnail }
-              name={ product.title }
-              value={ product.price }
-            />
-          </Link>
+          <div key={ product.id }>
+            <Link
+              to={ `/product/details/${product.id}` }
+              data-testid="product-detail-link"
+            >
+              <CardsProducts
+                image={ product.thumbnail }
+                name={ product.title }
+                value={ product.price }
+              />
+            </Link>
+            <button
+              data-testid="product-add-to-cart"
+              onClick={ () => setProductOnCart(product) }
+            >
+              Adicionar ao carrinho
+            </button>
+          </div>
         ))
       )}
       {selectedCategory === '' && stateListApi.length === 0 && (
