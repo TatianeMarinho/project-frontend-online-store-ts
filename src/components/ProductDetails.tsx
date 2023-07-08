@@ -12,7 +12,6 @@ const INITIAL_STATE = {
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(INITIAL_STATE);
-  console.log(product);
 
   useEffect(() => {
     const fetchDetails = async () => {
