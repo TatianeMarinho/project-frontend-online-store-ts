@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductById } from '../services/api';
+import { setProductOnCart } from '../services/ShoppingCartStorage';
 
 const INITIAL_STATE = {
   title: '',
@@ -45,6 +46,14 @@ function ProductDetails() {
             ) : null))}
           </ul>
         </div>
+      </div>
+      <div>
+        <button
+          data-testid="product-detail-add-to-cart"
+          onClick={ () => { setProductOnCart(product); } }
+        >
+          Adicionar ao carrinhoa
+        </button>
       </div>
     </main>
   );
