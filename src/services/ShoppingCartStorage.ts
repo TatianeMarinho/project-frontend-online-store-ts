@@ -3,7 +3,7 @@ function setProductOnCart(product: any) {
   const productToStore = { ...product, quantity };
 
   const storedCart = localStorage.getItem('shoppingCart');
-  console.log(storedCart);
+
   const shoppingCart = JSON.parse(storedCart || '[]');
 
   const storedProduct = shoppingCart.find((p:any) => p.id === product.id);
@@ -15,7 +15,6 @@ function setProductOnCart(product: any) {
       quantity,
     };
     const newStorage = replaceItem(shoppingCart, storedProduct, productWithNewQuantity);
-    console.log(shoppingCart);
     localStorage.setItem(
       'shoppingCart',
       JSON.stringify([...newStorage]),
