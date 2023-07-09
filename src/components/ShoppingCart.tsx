@@ -13,16 +13,20 @@ function ShoppingCart() {
         <div key={ product.id }>
           <h3 data-testid="shopping-cart-product-name">
             Nome:
+            {' '}
             {product.title}
           </h3>
           <h3>
             Preço:
-            {product.price}
+            {' '}
+            {`R$ ${product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
           </h3>
           <h3 data-testid="shopping-cart-product-quantity">
             Quantidade:
+            {' '}
             {product.quantity}
           </h3>
+          <img src={ product.thumbnail } alt="foto do produto" />
         </div>
       );
     })

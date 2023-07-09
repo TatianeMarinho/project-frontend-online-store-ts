@@ -13,13 +13,13 @@ type ProductType = {
   id: string;
   thumbnail: string;
   title: string;
-  price: string;
+  price: number;
 };
 const INITIAL_STATE = {
   id: '',
   thumbnail: '',
   title: '',
-  price: '',
+  price: 0,
 };
 
 function Search() {
@@ -42,7 +42,6 @@ function Search() {
     const { name, value } = event.target;
     setProductValue({ ...productValue, [name]: value });
   };
-  console.log(productValue);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -52,7 +51,6 @@ function Search() {
       getProductsFromCategoryAndQuery(productValue.search, undefined);
       if (products) { setStateListApi(products.results); }
       setStateListMap(products.results);
-      console.log(stateListMap);
     } catch (err) {
       console.error('Nenhum produto foi encontrado');
     }
@@ -67,8 +65,10 @@ function Search() {
     }
   };
   return (
-    <div>
-      <Link data-testid="shopping-cart-button" to="/shoppingcart">Carrinho</Link>
+    <>
+      <nav>
+        <Link data-testid="shopping-cart-button" to="/shoppingcart">Carrinho</Link>
+      </nav>
       <form onSubmit={ handleSubmit }>
         <input
           type="text"
@@ -96,49 +96,58 @@ function Search() {
           ))
         )}
       </div>
-      {selectedCategory !== '' && categoryProducts.length > 0 && (
-        categoryProducts.map((product) => (
-          <div key={ product.id }>
-            <Link
-              to={ `/product/details/${product.id}` }
-              data-testid="product-detail-link"
-            >
-              <CardsProducts
-                image={ product.thumbnail }
-                name={ product.title }
-                value={ product.price }
-              />
-            </Link>
-            <button
-              data-testid="product-add-to-cart"
-              onClick={ () => setProductOnCart(product) }
-            >
-              Adicionar ao carrinho
-            </button>
-          </div>
-        ))
-      )}
-      {selectedCategory === '' && stateListApi.length === 0 && (
-        <p data-testid="home-initial-message">
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </p>
-      )}
-      {selectedCategory === '' && stateListApi.length > 0 && (
-        stateListMap.map((product) => (
-          <Link
-            key={ product.id }
-            to={ `/product/details/${product.id}` }
-            data-testid="product-detail-link"
-          >
-            <CardsProducts
-              image={ product.thumbnail }
-              name={ product.title }
-              value={ product.price }
-            />
-          </Link>
-        ))
-      )}
-    </div>
+      <section className="results-container">
+        {selectedCategory !== '' && categoryProducts.length > 0 && (
+          categoryProducts.map((product) => (
+            <div key={ product.id }>
+              <Link
+                to={ `/product/details/${product.id}` }
+                data-testid="product-detail-link"
+              >
+                <CardsProducts
+                  image={ product.thumbnail }
+                  name={ product.title }
+                  value={ product.price }
+                />
+              </Link>
+              <button
+                data-testid="product-add-to-cart"
+                onClick={ () => setProductOnCart(product) }
+              >
+                Adicionar ao carrinho
+              </button>
+            </div>
+          ))
+        )}
+        {selectedCategory === '' && stateListApi.length === 0 && (
+          <p data-testid="home-initial-message">
+            Digite algum termo de pesquisa ou escolha uma categoria.
+          </p>
+        )}
+        {selectedCategory === '' && stateListApi.length > 0 && (
+          stateListMap.map((product) => (
+            <div key={ product.id }>
+              <Link
+                to={ `/product/details/${product.id}` }
+                data-testid="product-detail-link"
+              >
+                <CardsProducts
+                  image={ product.thumbnail }
+                  name={ product.title }
+                  value={ product.price }
+                />
+              </Link>
+              <button
+                data-testid="product-add-to-cart"
+                onClick={ () => setProductOnCart(product) }
+              >
+                Adicionar ao carrinho
+              </button>
+            </div>
+          ))
+        )}
+      </section>
+    </>
 
   );
 }
