@@ -28,6 +28,40 @@ function setProductOnCart(product: any) {
 function getItemsOnCart() {
   return JSON.parse(localStorage.getItem('shoppingCart') || '[]');
 }
+function removeQuantityFromCart(product: any) {
+  const storedCart = localStorage.getItem('shoppingCart');
+
+  const shoppingCart = JSON.parse(storedCart || '[]');
+
+  const storedProduct = shoppingCart.find((p:any) => p.id === product.id);
+
+  const quantity = storedProduct.quantity - 1;
+
+  if (quantity < 1) {
+    const newStorage = RemoveItem(shoppingCart, storedProduct);
+    localStorage.setItem('shoppingCart', JSON.stringify([...newStorage]));
+    return;
+  }
+
+  const productWithNewQuantity = {
+    ...storedProduct,
+    quantity,
+  };
+  const newStorage = replaceItem(shoppingCart, storedProduct, productWithNewQuantity);
+  localStorage.setItem('shoppingCart', JSON.stringify([...newStorage]));
+}
+
+function removeFromCart(product: any) {
+  const storedCart = localStorage.getItem('shoppingCart');
+
+  const shoppingCart = JSON.parse(storedCart || '[]');
+
+  const storedProduct = shoppingCart.find((p:any) => p.id === product.id);
+
+  const newStorage = RemoveItem(shoppingCart, storedProduct);
+
+  localStorage.setItem('shoppingCart', JSON.stringify([...newStorage]));
+}
 
 function replaceItem(array: any[], itemToRemove: any, itemToAdd: any) {
   const index = array.findIndex((p:any) => p.id === itemToRemove.id);
@@ -35,4 +69,10 @@ function replaceItem(array: any[], itemToRemove: any, itemToAdd: any) {
   return array;
 }
 
-export { setProductOnCart, getItemsOnCart };
+function RemoveItem(array: any[], itemToRemove: any) {
+  const index = array.findIndex((p:any) => p.id === itemToRemove.id);
+  array.splice(index, 1);
+  return array;
+}
+
+export { setProductOnCart, getItemsOnCart, removeQuantityFromCart, removeFromCart };
