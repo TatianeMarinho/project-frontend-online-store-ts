@@ -31,7 +31,9 @@ function ProductDetails() {
       </div>
       <div className="productDetailsContainer">
         <h2 data-testid="product-detail-name">{product.title}</h2>
-        <h3 data-testid="product-detail-price">{`R$: ${product.price.toFixed(2)}`}</h3>
+        <h3 data-testid="product-detail-price">
+          {`R$ ${product.price.toFixed(2)}`}
+        </h3>
         <div>
           <img
             src={ product.pictures[0].url }
@@ -52,7 +54,7 @@ function ProductDetails() {
           data-testid="product-detail-add-to-cart"
           onClick={ () => { setProductOnCart(product); } }
         >
-          Adicionar ao carrinhoa
+          Adicionar ao carrinho
         </button>
       </div>
     </main>

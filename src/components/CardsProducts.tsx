@@ -1,7 +1,7 @@
 type PropsCard = {
   image: string;
   name: string;
-  value: string | number;
+  value: number;
 };
 
 function CardsProducts(props: PropsCard) {
@@ -12,10 +12,7 @@ function CardsProducts(props: PropsCard) {
       <img src={ image } alt={ name } />
       <div>
         <h3>{ name }</h3>
-        <h4>
-          R$:
-          { value }
-        </h4>
+        <h4>{ `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` }</h4>
       </div>
     </div>
   );
