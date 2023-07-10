@@ -19,10 +19,11 @@ function setProductOnCart(product: any) {
       'shoppingCart',
       JSON.stringify([...newStorage]),
     );
-    return;
+    return [...newStorage];
   }
 
   localStorage.setItem('shoppingCart', JSON.stringify([...shoppingCart, productToStore]));
+  return [...shoppingCart, productToStore];
 }
 
 function getItemsOnCart() {
@@ -35,13 +36,7 @@ function removeQuantityFromCart(product: any) {
 
   const storedProduct = shoppingCart.find((p:any) => p.id === product.id);
 
-  const quantity = storedProduct.quantity - 1;
-
-  if (quantity < 1) {
-    const newStorage = RemoveItem(shoppingCart, storedProduct);
-    localStorage.setItem('shoppingCart', JSON.stringify([...newStorage]));
-    return;
-  }
+  const quantity = storedProduct.quantity > 1 ? storedProduct.quantity - 1 : 1;
 
   const productWithNewQuantity = {
     ...storedProduct,
@@ -49,6 +44,7 @@ function removeQuantityFromCart(product: any) {
   };
   const newStorage = replaceItem(shoppingCart, storedProduct, productWithNewQuantity);
   localStorage.setItem('shoppingCart', JSON.stringify([...newStorage]));
+  return [...newStorage];
 }
 
 function removeFromCart(product: any) {
@@ -61,6 +57,7 @@ function removeFromCart(product: any) {
   const newStorage = RemoveItem(shoppingCart, storedProduct);
 
   localStorage.setItem('shoppingCart', JSON.stringify([...newStorage]));
+  return newStorage;
 }
 
 function replaceItem(array: any[], itemToRemove: any, itemToAdd: any) {

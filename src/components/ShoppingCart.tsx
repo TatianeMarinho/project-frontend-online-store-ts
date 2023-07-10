@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   getItemsOnCart,
   removeQuantityFromCart,
@@ -9,10 +9,20 @@ import {
 function ShoppingCart() {
   const [storedCart, setStoredCart] = useState(getItemsOnCart());
 
-  useEffect(() => {
-    const newCart = getItemsOnCart();
-    setStoredCart(newCart);
-  }, [storedCart]);
+  const handleRemoveItem = (product: any) => {
+    const newStorage = removeFromCart(product);
+    setStoredCart(newStorage);
+  };
+
+  const handleAddButton = (product: any) => {
+    const newStorage = setProductOnCart(product);
+    setStoredCart(newStorage);
+  };
+
+  const handleMinusButton = (product: any) => {
+    const newStorage = removeQuantityFromCart(product);
+    setStoredCart(newStorage);
+  };
 
   if (storedCart.length === 0) {
     return (<h2 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h2>);
@@ -35,20 +45,20 @@ function ShoppingCart() {
           <div style={ { display: 'flex' } }>
             <button
               data-testid="remove-product"
-              onClick={ () => removeFromCart(product) }
+              onClick={ () => handleRemoveItem(product) }
             >
               X
             </button>
             <button
               data-testid="product-decrease-quantity"
-              onClick={ () => removeQuantityFromCart(product) }
+              onClick={ () => handleMinusButton(product) }
             >
               -
             </button>
             <h3 data-testid="shopping-cart-product-quantity">{product.quantity}</h3>
             <button
               data-testid="product-increase-quantity"
-              onClick={ () => setProductOnCart(product) }
+              onClick={ () => handleAddButton(product) }
             >
               +
             </button>
