@@ -19,14 +19,45 @@ function setProductOnCart(product: any) {
       'shoppingCart',
       JSON.stringify([...newStorage]),
     );
-    return;
+    return [...newStorage];
   }
 
   localStorage.setItem('shoppingCart', JSON.stringify([...shoppingCart, productToStore]));
+  return [...shoppingCart, productToStore];
 }
 
 function getItemsOnCart() {
   return JSON.parse(localStorage.getItem('shoppingCart') || '[]');
+}
+function removeQuantityFromCart(product: any) {
+  const storedCart = localStorage.getItem('shoppingCart');
+
+  const shoppingCart = JSON.parse(storedCart || '[]');
+
+  const storedProduct = shoppingCart.find((p:any) => p.id === product.id);
+
+  const quantity = storedProduct.quantity > 1 ? storedProduct.quantity - 1 : 1;
+
+  const productWithNewQuantity = {
+    ...storedProduct,
+    quantity,
+  };
+  const newStorage = replaceItem(shoppingCart, storedProduct, productWithNewQuantity);
+  localStorage.setItem('shoppingCart', JSON.stringify([...newStorage]));
+  return [...newStorage];
+}
+
+function removeFromCart(product: any) {
+  const storedCart = localStorage.getItem('shoppingCart');
+
+  const shoppingCart = JSON.parse(storedCart || '[]');
+
+  const storedProduct = shoppingCart.find((p:any) => p.id === product.id);
+
+  const newStorage = RemoveItem(shoppingCart, storedProduct);
+
+  localStorage.setItem('shoppingCart', JSON.stringify([...newStorage]));
+  return newStorage;
 }
 
 function replaceItem(array: any[], itemToRemove: any, itemToAdd: any) {
@@ -35,4 +66,10 @@ function replaceItem(array: any[], itemToRemove: any, itemToAdd: any) {
   return array;
 }
 
-export { setProductOnCart, getItemsOnCart };
+function RemoveItem(array: any[], itemToRemove: any) {
+  const index = array.findIndex((p:any) => p.id === itemToRemove.id);
+  array.splice(index, 1);
+  return array;
+}
+
+export { setProductOnCart, getItemsOnCart, removeQuantityFromCart, removeFromCart };
