@@ -1,4 +1,12 @@
-function setProductOnCart(product: any) {
+type ProductType = {
+  id: string;
+  thumbnail: string;
+  title: string;
+  price: number;
+  quantity?: number;
+};
+
+function setProductOnCart(product: ProductType) {
   let quantity = 1;
   const productToStore = { ...product, quantity };
 
@@ -6,7 +14,7 @@ function setProductOnCart(product: any) {
 
   const shoppingCart = JSON.parse(storedCart || '[]');
 
-  const storedProduct = shoppingCart.find((p:any) => p.id === product.id);
+  const storedProduct = shoppingCart.find((p:ProductType) => p.id === product.id);
 
   if (storedProduct !== undefined) {
     quantity = storedProduct.quantity + 1;
@@ -29,12 +37,12 @@ function setProductOnCart(product: any) {
 function getItemsOnCart() {
   return JSON.parse(localStorage.getItem('shoppingCart') || '[]');
 }
-function removeQuantityFromCart(product: any) {
+function removeQuantityFromCart(product: ProductType) {
   const storedCart = localStorage.getItem('shoppingCart');
 
   const shoppingCart = JSON.parse(storedCart || '[]');
 
-  const storedProduct = shoppingCart.find((p:any) => p.id === product.id);
+  const storedProduct = shoppingCart.find((p:ProductType) => p.id === product.id);
 
   const quantity = storedProduct.quantity > 1 ? storedProduct.quantity - 1 : 1;
 
@@ -47,12 +55,12 @@ function removeQuantityFromCart(product: any) {
   return [...newStorage];
 }
 
-function removeFromCart(product: any) {
+function removeFromCart(product: ProductType) {
   const storedCart = localStorage.getItem('shoppingCart');
 
   const shoppingCart = JSON.parse(storedCart || '[]');
 
-  const storedProduct = shoppingCart.find((p:any) => p.id === product.id);
+  const storedProduct = shoppingCart.find((p:ProductType) => p.id === product.id);
 
   const newStorage = RemoveItem(shoppingCart, storedProduct);
 
@@ -60,14 +68,18 @@ function removeFromCart(product: any) {
   return newStorage;
 }
 
-function replaceItem(array: any[], itemToRemove: any, itemToAdd: any) {
-  const index = array.findIndex((p:any) => p.id === itemToRemove.id);
+function replaceItem(
+  array: ProductType[],
+  itemToRemove: ProductType,
+  itemToAdd: ProductType,
+) {
+  const index = array.findIndex((p:ProductType) => p.id === itemToRemove.id);
   array.splice(index, 1, itemToAdd);
   return array;
 }
 
-function RemoveItem(array: any[], itemToRemove: any) {
-  const index = array.findIndex((p:any) => p.id === itemToRemove.id);
+function RemoveItem(array: ProductType[], itemToRemove: ProductType) {
+  const index = array.findIndex((p:ProductType) => p.id === itemToRemove.id);
   array.splice(index, 1);
   return array;
 }
