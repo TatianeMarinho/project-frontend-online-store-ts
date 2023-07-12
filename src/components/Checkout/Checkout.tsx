@@ -1,4 +1,4 @@
-import { getItemsOnCart } from '../services/ShoppingCartStorage';
+import { getItemsOnCart } from '../../services/ShoppingCartStorage';
 import CheckoutForm from './CheckoutForm';
 
 type ProductType = {

@@ -2,12 +2,18 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductById } from '../services/api';
 import { setProductOnCart } from '../services/ShoppingCartStorage';
+import Carrinho from '../images/shoppingCart.svg';
+import AddCarrinho from '../images/addShoppingCart.svg';
+import Home from '../images/homeButton.svg';
+import '../styles/productDetail.css';
 
 const INITIAL_STATE = {
   title: '',
   pictures: [{ url: '' }],
+  thumbnail: '',
   attributes: [{ id: '', name: '', value_name: '' }],
   price: 0,
+  id: '',
 };
 
 function ProductDetails() {
@@ -23,23 +29,35 @@ function ProductDetails() {
   }, [id]);
 
   return (
-    <main>
-      <div>
-        <Link to="/shoppingcart" data-testid="shopping-cart-button">
-          Carrinho
+    <>
+      <nav className="productDetailsNavContainer">
+        <Link to="/">
+          <img src={ Home } alt="home" />
         </Link>
-      </div>
-      <div className="productDetailsContainer">
-        <h2 data-testid="product-detail-name">{product.title}</h2>
-        <h3 data-testid="product-detail-price">
-          {`R$ ${product.price.toFixed(2)}`}
-        </h3>
-        <div>
+        <Link to="/shoppingcart" data-testid="shopping-cart-button">
+          <img src={ Carrinho } alt="carrinho" />
+        </Link>
+      </nav>
+      <main className="productDetailsContainer">
+        <div className="productDetailsfirstContainer">
           <img
+            className="productDetailsImg"
             src={ product.pictures[0].url }
             alt="imagem do produto"
             data-testid="product-detail-image"
           />
+          <button
+            data-testid="product-detail-add-to-cart"
+            onClick={ () => { setProductOnCart(product); } }
+          >
+            <img src={ AddCarrinho } alt="adicionar ao carrinho" />
+          </button>
+        </div>
+        <div className="productDetailsInfo-container">
+          <h1 data-testid="product-detail-name">{product.title}</h1>
+          <h2 data-testid="product-detail-price">
+            {`R$ ${product.price.toFixed(2)}`}
+          </h2>
           <ul>
             {product.attributes.map((att) => (att.value_name !== null ? (
               <li key={ att.id }>
@@ -48,16 +66,8 @@ function ProductDetails() {
             ) : null))}
           </ul>
         </div>
-      </div>
-      <div>
-        <button
-          data-testid="product-detail-add-to-cart"
-          onClick={ () => { setProductOnCart(product); } }
-        >
-          Adicionar ao carrinho
-        </button>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 

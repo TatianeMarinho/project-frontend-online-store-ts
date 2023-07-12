@@ -8,11 +8,11 @@ function CardsProducts(props: PropsCard) {
   const { image, name, value } = props;
 
   return (
-    <div data-testid="product">
+    <div className="product" data-testid="product">
       <img src={ image } alt={ name } />
       <div>
-        <h3>{ name }</h3>
-        <h4>{ `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` }</h4>
+        <h3>{ `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` }</h3>
+        <p>{ name }</p>
       </div>
     </div>
   );
