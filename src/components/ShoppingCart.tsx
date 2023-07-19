@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   getItemsOnCart,
   removeQuantityFromCart,
   setProductOnCart,
   removeFromCart,
 } from '../services/ShoppingCartStorage';
+import '../styles/shoppingcart.css';
+import lixeira from '../images/lixeira.svg';
+import Home from '../images/homeButton.svg';
+import Carrinho from '../images/shoppingCart.svg';
 
 type ProductType = {
   id: string;
@@ -40,45 +44,56 @@ function ShoppingCart() {
 
   return (
     <>
-      <section>
-        {storedCart.map((product: ProductType) => (
-          <div key={ product.id } className="product-card-shopping-cart">
-            <h3 data-testid="shopping-cart-product-name">{product.title}</h3>
-            <div style={ { display: 'flex', alignItems: 'center' } }>
-              <button
-                data-testid="remove-product"
-                onClick={ () => handleRemoveItem(product) }
-              >
-                X
-              </button>
-              <img src={ product.thumbnail } alt="foto do produto" />
-              <button
-                data-testid="product-decrease-quantity"
-                onClick={ () => handleMinusButton(product) }
-              >
-                -
-              </button>
-              <h3 data-testid="shopping-cart-product-quantity">{product.quantity}</h3>
-              <button
-                data-testid="product-increase-quantity"
-                onClick={ () => handleAddButton(product) }
-              >
-                +
-              </button>
-              <h3>
-                {`R$ ${product.price
-                  .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
-              </h3>
+      <nav className="productDetailsNavContainer">
+        <Link to="/">
+          <img src={ Home } alt="home" />
+        </Link>
+        <Link to="/shoppingcart" data-testid="shopping-cart-button">
+          <img src={ Carrinho } alt="carrinho" />
+        </Link>
+      </nav>
+      <main className="shopping-cart-main-container">
+        <section className="products-shoppingcart-container">
+          {storedCart.map((product: ProductType) => (
+            <div key={ product.id } className="product-card-shopping-cart">
+              <h3 data-testid="shopping-cart-product-name">{product.title}</h3>
+              <div className="product-info-shopping-cart">
+                <button
+                  data-testid="remove-product"
+                  onClick={ () => handleRemoveItem(product) }
+                >
+                  <img src={ lixeira } alt="lixeira" />
+                </button>
+                <img src={ product.thumbnail } alt="foto do produto" />
+                <button
+                  data-testid="product-decrease-quantity"
+                  onClick={ () => handleMinusButton(product) }
+                >
+                  -
+                </button>
+                <h4 data-testid="shopping-cart-product-quantity">{product.quantity}</h4>
+                <button
+                  data-testid="product-increase-quantity"
+                  onClick={ () => handleAddButton(product) }
+                >
+                  +
+                </button>
+                <h3>
+                  {`R$ ${product.price
+                    .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
+                </h3>
+              </div>
             </div>
-          </div>
-        ))}
-      </section>
-      <button
-        onClick={ () => navigate('/checkout') }
-        data-testid="checkout-products"
-      >
-        checkout
-      </button>
+          ))}
+        </section>
+        <button
+          className="checkout-button"
+          onClick={ () => navigate('/checkout') }
+          data-testid="checkout-products"
+        >
+          checkout
+        </button>
+      </main>
     </>
   );
 }
