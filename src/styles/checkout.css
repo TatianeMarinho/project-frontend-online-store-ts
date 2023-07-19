@@ -1,0 +1,125 @@
+.product-list-out-checkout-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+}
+
+.product-list-out-checkout-container h1 {
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.product-list-out-checkout-container h2 {
+  margin-bottom: 40px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.product-list-checkout-container {
+  display: grid;
+  gap: 15px 40px;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.product-checkout-container {
+  border: solid rgb(226, 226, 226) 2px;
+  box-shadow: 1px 4px 5px black;
+  display: flex;
+  flex-direction: column;
+  height: 120px;
+  padding: 10px;
+  width: 300px;
+}
+
+.product-checkout-container .product-title-checkout {
+  color: #505050;
+  font-size: 14px;
+  font-weight: 400;
+  height: 32px;
+  margin-bottom: 12px;
+}
+
+.product-checkout-container h3 {
+  color: #505050;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.product-checkout-container img {
+  height: 50px;
+  width: 50px;
+}
+
+.product-info-checkout-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.product-info-checkout-container h4 {
+  background-color: #cacaca;
+  border-radius: 100%;
+  font-size: 12px;
+  padding: 8px 12px;
+}
+
+.checkout-form-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 60px;
+}
+
+.checkout-form-container h2 {
+  margin-bottom: 30px;
+}
+
+.checkout-input-info-container {
+  display: flex;
+  flex-direction: column;
+  height: 60px;
+  margin-bottom: 14px;
+}
+
+.checkout-form-container span {
+  color: red;
+}
+
+.checkout-input-info-container input, .checkout-input-info-container select {
+  font-size: 16px;
+  height: 40px;
+  padding: 5px 20px;
+  width: 400px;
+}
+
+.checkout-form-container label {
+  align-items: center;
+  display: flex;
+  height: 60px;
+  margin-bottom: 20px;
+}
+
+.checkout-form-container label img {
+  height: 50px;
+  width: 90px;
+}
+
+.checkout-form-submit-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 600px;
+}
+
+.checkout-form-submit-container button {
+  background-color: #53b7d0;
+  border: none;
+  box-shadow: 1px 4px 5px black;
+  font-family: monospace;
+  font-size: 20px;
+  height: 50px;
+  margin-bottom: 20px;
+  width: 300px;
+}
